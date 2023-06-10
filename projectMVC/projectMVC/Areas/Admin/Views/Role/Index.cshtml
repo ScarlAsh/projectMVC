@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model List<IdentityRole>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+
+<p class="btn btn-light">
+    <a class="btn btn-light" asp-area="Admin" asp-action="Create" asp-controller="Role">Create New Role</a>
+</p>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            
+            <td>Role Name</td>
+
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>@item.Name</td>
+
+            </tr>
+            
+        }
+
+    </tbody>
+
+
+</table>
+
+

@@ -1,0 +1,102 @@
+﻿@model PaginationList<Product>
+@{
+	Layout = null;
+}
+<div class="products mb-3">
+	<div class="row justify-content-center" id="CartItem">
+
+
+
+
+		@foreach (var item in Model)
+		{
+
+			@*var x = @item.Images[0].ImageUrl;*@
+			<div class="col-4">
+				<div class="product product-7 text-center">
+					<figure class="product-media">
+						@*<span class="product-label label-new">New</span>*@
+						<a href="#">
+
+						</a>
+						<img src='~/assets/images/ourimages/@item.Images[0].ImageUrl' alt="Product image" class="product-image" style="width:100%">
+
+						<div class="product-action-vertical">
+							<a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+							@*<a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>*@
+							@*<a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>*@
+						</div><!-- End .product-action-vertical -->
+
+						<div class="product-action product-action-dark" onclick="addToCart(@item.Id)">
+							<a class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+						</div><!-- End .product-action -->
+					</figure><!-- End .product-media -->
+
+					<div class="product-body">
+						<div class="product-cat">
+							<a href="#"> @item.Brand.Name </a>
+						</div><!-- End .product-cat -->
+						<h3 class="product-title"><a asp-action="Details" asp-controller="Products" asp-route-id="@item.Id">        @item.Name            </a></h3><!-- End .product-title -->
+						<div class="product-price">
+
+
+							$@item.Price
+
+
+						</div><!-- End .product-price -->
+
+
+
+					</div><!-- End .product-body -->
+				</div><!-- End .product -->
+			</div>
+
+			<!-- End .col-sm-6 -->
+		}
+
+
+
+
+
+
+
+
+	</div><!-- End .row -->
+</div><!-- End .products -->
+
+
+
+
+
+
+
+<nav aria-label="Page navigation">
+	<ul class="pagination justify-content-center">
+
+		@{
+			var prevDisabled = !Model.HasPrevPage ? "disablled" : "";
+			var nextDisabled = !Model.HasNextPage ? "disablled" : "";
+		}
+
+
+
+		<li class="page-item">
+			<a  class="@prevDisabled  page-link page-link-prev" aria-label="Previous" tabindex="-1" aria-disabled="true" onclick="getDataFilter(@Model.PageIndex - 1)">
+				<span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+			</a>
+		</li>
+
+		@for (int i = 1; i <= @Model.TotalPages; i++)
+		{
+			<li class="page-item active" aria-current="page"><a class="page-link" id="pagination-@i" onclick="getDataFilter(@i)"> @i </a></li>
+		}
+
+
+		<li class="page-item">
+			<a  class="@nextDisabled page-link page-link-next" aria-label="Next" onclick="getDataFilter(@Model.PageIndex + 1)">
+				Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+			</a>
+		</li>
+
+	</ul>
+</nav>

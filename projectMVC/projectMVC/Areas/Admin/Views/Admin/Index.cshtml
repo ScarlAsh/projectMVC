@@ -1,0 +1,55 @@
+﻿@model List<projectMVC.Models.ApplicationUser>;
+
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+
+
+<p>List of All Admins</p>
+
+
+<div>
+
+<a class="btn btn-light" href="/Admin/Admin/addAdmin">Create a new Admin</a>
+
+</div>
+
+<div>
+	<table class="table">
+
+		<thead>
+			<tr>
+			<td>Firstname</td>
+			<td>Lastname</td>
+			<td>Username</td>
+			<td>Email</td>
+			
+			</tr>
+
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+		{
+			<tr>
+				<td>@item.FirstName</td>
+				<td>@item.LastName</td>
+				<td>@item.UserName</td>
+				<td>@item.Email</td>
+				
+
+			</tr>
+
+		}
+			
+
+
+		</tbody>
+
+
+
+	</table>
+
+
+</div>

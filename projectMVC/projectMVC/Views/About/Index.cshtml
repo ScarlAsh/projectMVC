@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+@model List<StoreReview>
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">About us</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    <div class="container">
+        <div class="page-header page-header-big text-center" style="background-image: url('/assets/images/about/E.jpg')">
+            <h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
+        </div><!-- End .page-header -->
+    </div><!-- End .container -->
+
+    <div class="page-content pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <h2 class="title">Our Policy</h2><!-- End .title -->
+                    <p>Offering quality products to the electronists with the best price at your door step (where ever & when ever you need it). </p>
+                </div><!-- End .col-lg-6 -->
+
+                <div class="col-lg-6">
+                    <h2 class="title">Our Service</h2><!-- End .title -->
+                    <p>We focus on availing easy & personlized service for out customers. Your order is processed in a minimal time with atmost care. We have tie-up with major courier suppliers (Fedex, DHL, etc.) to deliver at any part of the world. </p>
+                </div><!-- End .col-lg-6 -->
+            </div><!-- End .row -->
+
+            <div class="mb-5"></div><!-- End .mb-4 -->
+        </div><!-- End .container -->
+
+        <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 mb-3 mb-lg-0">
+                        <h2 class="title">Who We Are</h2><!-- End .title -->
+                        <p class="lead text-primary mb-3">We are one of the most trusted online store in Egypt for Electronics Devices</p><!-- End .lead text-primary -->
+                   
+                    </div><!-- End .col-lg-5 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .bg-light-2 pt-6 pb-6 -->
+
+        <hr class="mt-4 mb-6">
+
+
+
+        <div class="mb-2"></div><!-- End .mb-2 -->
+
+        @*<div class="about-testimonials bg-light-2 pt-6 pb-6">
+            <div class="container">
+                <h2 class="title text-center mb-3">What Customer Say About Us</h2><!-- End .title text-center -->
+
+                <div class="owl-carousel owl-simple owl-testimonials-photo" data-toggle="owl"
+                     data-owl-options='{
+                                "nav": false,
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "1200": {
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+
+                            @foreach(var item in Model)
+                            {
+                                <blockquote class="testimonial text-center">
+                                    <img src="~/assets/images/testimonials/user-1.jpg" alt="user">
+                                        <p>“ @item.ReviewDescription ”</p>
+                                    <cite>
+                                        @{
+                                            var userName = item?.User?.FirstName + item?.User?.LastName;
+                                        }
+                                       @userName
+                                    </cite>
+                                </blockquote><!-- End .testimonial -->
+                            }
+
+                </div><!-- End .testimonials-slider owl-carousel -->
+                
+                <div class="col-lg-12" style="text-align:center;margin-top:45px">
+                    <h2 class="title mb-1">Have Any Reviews</h2><!-- End .title mb-2 -->
+                    <p class="mb-2">Thank you for choosing us,We'd love to hear feedback from our customers.Please fill out the form review below:'</p>
+
+                    <form asp-action="Index"  method="post" class="contact-form mb-3">
+
+                        <label for="cmessage" class="sr-only">Review</label>
+                        <textarea class="form-control " name="messageReivew" style="width:50%;display:block;margin-left:auto;margin-right:auto"  cols="30" rows="4" id="cmessage" placeholder="Message Review *" required></textarea>
+
+
+                        <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                            <span>SUBMIT</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </button>
+                    </form><!-- End .contact-form -->
+                </div><!-- End .col-lg-6 -->
+            </div><!-- End .row -->
+            </div>*@
+            <!-- End .container -->
+        </div><!-- End .bg-light-2 pt-5 pb-6 -->
+
+
+    </div><!-- End .page-content -->
+</main><!-- End .main -->

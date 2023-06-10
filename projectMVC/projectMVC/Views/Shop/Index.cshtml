@@ -1,0 +1,395 @@
+﻿
+@model PaginationList<Product>
+
+
+
+<style>
+
+
+	.search-box {
+		width: 600px;
+		position: relative;
+		display: flex;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		height: 50px;
+	}
+
+	.search-input {
+		width: 100%;
+		font-family: 'Montserrat', sans-serif;
+		font-size: 16px;
+		padding: 15px 45px 15px 15px;
+		background-color: #eaeaeb;
+		color: #6c6c6c;
+		border-radius: 6px;
+		border: none;
+		transition: all .4s;
+	}
+
+		.search-input:focus {
+			border: none;
+			outline: none;
+			box-shadow: 0 1px 12px #b8c6db;
+			-moz-box-shadow: 0 1px 12px #b8c6db;
+			-webkit-box-shadow: 0 1px 12px #b8c6db;
+		}
+
+	.search-btn {
+		background-color: transparent;
+		font-size: 18px;
+		padding: 6px 9px;
+		margin-left: -45px;
+		border: none;
+		color: #6c6c6c;
+		transition: all .4s;
+		z-index: 10;
+	}
+
+		.search-btn:hover {
+			transform: scale(1.2);
+			cursor: pointer;
+			color: black;
+		}
+
+		.search-btn:focus {
+			outline: none;
+			color: black;
+		}
+</style>
+
+<main class="main">
+	<audio id="audio" src="~/assets/click.mp3"></audio>
+	<div class="page-header text-center shop-header">
+		<div class="container">
+			<h1 class="page-title"> Shop With Us Easly <span>Shop</span></h1>
+		</div><!-- End .container -->
+	</div><!-- End .page-header -->
+
+	<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+
+		<div class="container">
+
+			<div class="row">
+
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a asp-action="index" asp-controller="Home">Home</a></li>
+					<li class="breadcrumb-item"><a asp-action="index" asp-controller="shop">Shop</a></li>
+				</ol>
+
+				<div class="header-center">
+					<div class="search-box">
+						<input class="search-input" type="text" placeholder="Search something.." id="shopSearchBar" onkeyup="getDataFilter()">
+						<button class="search-btn"><i class="fas fa-search"></i></button>
+					</div><!-- End .header-search -->
+				</div>
+
+			</div>
+
+		</div><!-- End .container -->
+		
+	</nav><!-- End .breadcrumb-nav -->
+
+	<div class="page-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9" id="CartItem">
+				   
+					<div class="products mb-3">
+						<div class="row justify-content-center" >
+
+
+
+
+							@foreach (var item in Model)
+							{
+
+								<div class="col-4">
+									<div class="product product-7 text-center">
+										<figure class="product-media">
+											<a    href="product.html">
+												
+											</a>
+											<img src='~/assets/images/ourimages/@item.Images[0].ImageUrl' alt="Product image" class="product-image" style="width:100%">
+
+											<div class="product-action-vertical" onclick="addToWishList(@item.Id)">
+												<a class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+											</div><!-- End .product-action-vertical -->
+
+											<div class="product-action product-action-dark" onclick="addToCart(@item.Id)">
+												<a class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+											</div><!-- End .product-action -->
+										</figure><!-- End .product-media -->
+
+										<div class="product-body">
+											<div class="product-cat">
+
+												<a > @item.Brand.Name </a>
+
+											</div><!-- End .product-cat -->
+											<h3 class="product-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id">        @item.Name            </a></h3><!-- End .product-title -->
+											<div class="product-price">
+
+
+												$@item.Price
+
+
+											</div><!-- End .product-price -->
+											
+
+											
+										</div><!-- End .product-body -->
+									</div><!-- End .product -->
+								</div><!-- End .col-sm-6 -->
+
+							}
+
+
+
+
+
+
+							
+
+						</div><!-- End .row -->
+					</div><!-- End .products -->
+
+
+
+
+
+
+
+					<nav aria-label="Page navigation">
+						<ul class="pagination justify-content-center">
+
+							@{
+								var prevDisabled = !Model.HasPrevPage ? "disablled" : "";
+								var nextDisabled = !Model.HasNextPage ? "disablled" : "";
+							}
+
+
+
+							<li class="page-item">
+								<a class="@prevDisabled  page-link page-link-prev" aria-label="Previous" tabindex="-1" aria-disabled="true" onclick="getDataFilter(@Model.PageIndex - 1)">
+									<span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+								</a>
+							</li>
+
+							@for (int i = 1; i <= @Model.TotalPages; i++)
+							{
+								<li class="page-item active" aria-current="page"><a class="page-link" id="pagination-@i" onclick="getDataFilter(@i)"> @i </a></li>
+							}
+
+
+							<li class="page-item">
+								<a class="@nextDisabled page-link page-link-next" aria-label="Next" onclick="getDataFilter(@Model.PageIndex + 1)">
+									Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+								</a>
+							</li>
+
+
+								
+							
+
+							
+
+						</ul>
+					</nav>
+				</div><!-- End .col-lg-9 -->
+
+
+
+
+				<!--     C a t e g o r y       -->
+
+
+
+
+				<aside class="col-lg-3 order-lg-first">
+					<div class="sidebar sidebar-shop">
+						<div class="widget widget-clean">
+							<label>Filters:</label>
+							<a href="#" class="sidebar-filter-clear">Clean All</a>
+						</div><!-- End .widget widget-clean -->
+
+						<div class="widget widget-collapsible">
+							<h3 class="widget-title">
+								<a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+									Category
+								</a>
+							</h3><!-- End .widget-title -->
+
+							<div class="collapse show" id="widget-1">
+								<div class="widget-body">
+									<div class="filter-items filter-items-count">
+
+
+
+
+										@foreach (var item in ViewBag.cats)
+										{
+											<div class="filter-item">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="Category" class="custom-control-input" id="Category-@item.Id" value="@item.Name" onchange="getDataFilter()">
+													<label class="custom-control-label" for="Category-@item.Id">@item.Name</label>
+												</div><!-- End .custom-checkbox -->
+											</div>
+										}
+
+
+
+									
+									</div><!-- End .filter-items -->
+								</div><!-- End .widget-body -->
+							</div><!-- End .collapse -->
+						</div><!-- End .widget -->
+
+
+
+						<!--     B r a n d       -->
+
+						<div class="widget widget-collapsible">
+							<h3 class="widget-title">
+								<a data-toggle="collapse" href="#widget-4" role="button" aria-expanded="true" aria-controls="widget-4">
+									Brand
+								</a>
+							</h3><!-- End .widget-title -->
+
+							<div class="collapse show" id="widget-4">
+								<div class="widget-body">
+									<div class="filter-items">
+
+										@foreach (var item in ViewBag.brands)
+										{
+											<div class="filter-item">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" class="custom-control-input" id="Brand-@item.Id" value="@item.Name" onchange="getDataFilter()" name="Brand">
+													<label class="custom-control-label" for="Brand-@item.Id">@item.Name</label>
+												</div><!-- End .custom-checkbox -->
+											</div>
+
+										}
+
+
+									</div><!-- End .filter-items -->
+								</div><!-- End .widget-body -->
+							</div><!-- End .collapse -->
+						</div>
+						<!-- End .widget -->
+
+						
+
+
+					</div><!-- End .sidebar sidebar-shop -->
+					<div class="">
+						<input type="range" min="0" max="200" value="100" oninput="rangeValue.innerText = this.value">
+						<p id="rangeValue">100</p>
+					</div>
+				</aside><!-- End .col-lg-3 -->
+
+
+
+
+			</div><!-- End .row -->
+		</div><!-- End .container -->
+	</div><!-- End .page-content -->
+</main><!-- End .main -->
+
+@section Scripts {
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<script>
+
+
+		function getDataFilter(i=1) {
+			console.log(i);
+			var Categories = [];
+			var Brands = [];
+			$('input[name = "Category"]:checked').each(function (j) {
+				Categories.push($(this).val());
+			});
+			$('input[name = "Brand"]:checked').each(function (j) {
+				Brands.push($(this).val());
+			});
+
+			var CategoriesSerialized = JSON.stringify(Categories);
+			var BrandsSerialized = JSON.stringify(Brands);
+			var search = $('#shopSearchBar').val();
+
+
+			$.ajax({
+				type: "Get",
+				url: '/shop/_shopCartItem',
+				contentType: "application/json; charset=utf-8",
+				data: { Categories: CategoriesSerialized, brands: BrandsSerialized, search: search, pageNumber: i },
+				dataType: "html",
+				success: function (data) {
+					console.log("succ");
+					$("#CartItem").empty();
+					$("#CartItem").html(data);
+				}, error: function (error) {
+					console.log("error");
+					
+
+				}
+			});
+		}
+
+		function addToCart(productId) {
+			var audio = document.getElementById("audio");
+			audio.play();
+			console.log(productId);
+			$.ajax({
+				type: "Get",
+				url: '/CartItems/_AddToCart',
+				contentType: "application/json; charset=utf-8",
+				data: { id: productId },
+				dataType: "html",
+				success: function (data) {
+					console.log("succ");
+					$("#cartCount").empty();
+					$("#cartCount").html(data);
+				}, error: function (error) {
+					console.log("error");
+
+
+				}
+			});
+		}
+
+		function addToWishList(productId) {
+			var audio = document.getElementById("audio");
+			audio.play();
+			console.log(productId);
+			$.ajax({
+				type: "Get",
+				url: '/WishListItems/_AddToWishList',
+				contentType: "application/json; charset=utf-8",
+				data: { id: productId },
+				dataType: "html",
+				success: function (data) {
+					console.log("succ");
+					$("#wishCount").empty();
+					$("#wishCount").html(data);
+				}, error: function (error) {
+					console.log("error");
+
+
+				}
+			});
+		}
+
+	</script>
+	
+
+
+}
+
+
+

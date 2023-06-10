@@ -1,0 +1,42 @@
+﻿@model projectMVC.Models.Review
+
+@{
+    
+    ViewData["Title"] = "Create";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ReviewDescription" class="control-label"></label>
+                <input asp-for="ReviewDescription" class="form-control" />
+                <span asp-validation-for="ReviewDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label">Product Name</label>
+                <select asp-for="ProductId" class ="form-control" asp-items="ViewBag.ProductId" 
+                ></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

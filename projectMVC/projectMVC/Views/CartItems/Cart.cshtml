@@ -1,0 +1,259 @@
+﻿@model List<projectMVC.Models.CartItem>
+@{
+    var subTotal = ViewBag.subTotal;
+}
+<style>
+ 
+
+   
+
+    .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .quantity__minus,
+    .quantity__plus {
+        display: block;
+        width: 22px;
+        height: 23px;
+        margin: 0;
+        background: #f8f9fa;
+        text-decoration: none;
+        text-align: center;
+        line-height: 23px;
+    }
+
+        .quantity__minus:hover,
+        .quantity__plus:hover {
+            background: #fcb941;
+            color: #fff;
+        }
+
+    .quantity__minus {
+        border-radius: 3px 0 0 3px;
+    }
+
+    .quantity__plus {
+        border-radius: 0 3px 3px 0;
+    }
+
+    .quantity__input {
+        width: 32px;
+        height: 19px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        border-top: 2px solid #dee0ee;
+        border-bottom: 2px solid #dee0ee;
+        border-left: 1px solid #dee0ee;
+        border-right: 2px solid #dee0ee;
+        background: #fff;
+        color: #8184a1;
+    }
+
+    .quantity__minus:link,
+    .quantity__plus:link {
+        color: #8184a1;
+    }
+
+    .quantity__minus:hover,
+    .quantity__plus:hover {
+        color: black
+    }
+</style>
+
+<main class="main" id="subtotal">
+    <div class="page-header text-center" style="background-image: url('~/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="product-col">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <img src="~/assets/images/ourimages/@item.Product.Images[0].ImageUrl" alt="Product image">
+                                                    </a>
+                                                </figure>
+
+                                                <h3 class="product-title">
+                                                    <a href="#">@item.Product.Name</a>
+                                                </h3><!-- End .product-title -->
+                                            </div><!-- End .product -->
+
+
+                                        </td>
+                                        <td class="price-col">$@item.Product.Price</td>
+                                        @*<td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                <input type="number" class="form-control" onchange="updateBill(@item.Id)"  value="@item.Quantity" min="1"  step="1" data-decimals="0">
+                                            </div><!-- End .cart-product-quantity -->
+                                        </td>*@
+                                        <td class="quantity-col">
+                                            <a id="minus_@item.Id" class="quantity__minus" onclick="minus(@item.Id)" style="display:inline-block;width:25px" ><span>-</span></a>
+                                            <input name="quantity" type="text" class="quantity__input" id="input-@item.Id" value="@item.Quantity" style="display:inline" onchange="updateBill(@item.Id,0)">
+                                            <a id="plus_@item.Id" class="quantity__plus" style="display:inline-block;width:25px" onclick="plus(@item.Id)"><span>+</span></a>
+                                        </td>
+                                        <td class="total-col">@string.Format("{0:C}",item.Product.Price * item.Quantity)</td>
+
+                                        <td class="remove-col">
+                                            <form asp-action="Delete" asp-controller="CartItems" asp-route-id=@item.Id>
+                                                <button type="submit" class="btn-remove"><i class="icon-close"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                        <!-- End .table table-wishlist -->
+
+
+                    </div><!-- End .col-lg-9 -->
+                    <aside class="col-lg-3">
+                        <div class="summary summary-cart">
+                            <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
+
+                            <table class="table table-summary">
+                                <tbody>
+                                    <tr class="summary-subtotal" >
+                                    <td>Subtotal:</td>
+                                    <td id="subtotal">@string.Format("{0:C}",subTotal)</td>
+                                    </tr><!-- End .summary-subtotal -->
+                                    <tr class="summary-shipping">
+                                        <td>Shipping:</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+
+                                  @*  <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="free-shipping" name="shippingMethod" value="0" class="custom-control-input">
+                                                <label class="custom-control-label" for="free-shipping">Within 5 Days</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>$0.00</td>
+                                    </tr><!-- End .summary-shipping-row -->*@
+
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="standart-shipping" name="shippingMethod" value="10" onclick="updateBill(0,10)" class="custom-control-input">
+                                                <label class="custom-control-label"  for="standart-shipping">Within 3 Days</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>$10.00</td>
+                                    </tr><!-- End .summary-shipping-row -->
+
+                                    @*<tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="express-shipping" name="shippingMethod" value="20" class="custom-control-input">
+                                                <label class="custom-control-label" for="express-shipping">Within 1 Day</label>
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        <td>$20.00</td>
+                                    </tr>*@
+                                    <tr class="summary-total">
+                                    <td>Total:</td>
+                                        <td>@string.Format("{0:C}",subTotal)</td>
+                                    </tr><!-- End .summary-total -->
+                                </tbody>
+                            </table><!-- End .table table-summary -->
+
+                            <a href="~/order/checkout/" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
+                        </div><!-- End .summary -->
+
+                        <a asp-action="Index" asp-controller="Shop" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+<script>
+    f()
+    {
+        console.log("asdasd");
+    }
+    function updateBill(productId=0,ship=0) {
+        var Quantity = document.getElementById("input-" + productId).value;
+        console.log(Quantity);
+        $.ajax({
+            type: "Get",
+            url: '/CartItems/_UpdateBill',
+            contentType: "application/json; charset=utf-8",
+            data: { quantity: Quantity, id: productId,shipingMehod:ship },
+            dataType: "html",
+            success: function (data) {
+                console.log("succ");
+                $("#subtotal").empty();
+                $("#subtotal").html(data);
+            }, error: function (error) {
+                console.log("error");
+
+
+            }
+        });
+    }
+    function minus(id)
+    {
+        var minus = document.getElementById("minus_" + id);
+        var input = document.getElementById("input-" + id);
+   
+        if(input.value >1)
+        {
+            input.value--;
+            updateBill(id,0);
+        }
+    }
+
+    function plus(id) {
+        var minus = document.getElementById("plus_" + id);
+        var input = document.getElementById("input-" + id);
+        console.log(minus)
+        console.log(input)
+        console.log(id)
+        if (input.value < 15) {
+            input.value++;
+            updateBill(id,0);
+
+        }
+    }
+</script>

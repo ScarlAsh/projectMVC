@@ -1,0 +1,58 @@
+﻿@using System.Security.Claims;
+@using projectMVC.ViewModels;
+@model ApplicationUser
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            @if (string.IsNullOrEmpty(Model.Picture))
+            {
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" height="150px" src="~/assets/images/profile.jpg">
+                    <span class="font-weight-bold">@User.FindFirstValue(ClaimTypes.Name)</span>
+                    <span class="text-black-50">@User.FindFirstValue(ClaimTypes.Email)</span>
+                    <span> </span>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" style="width:150px;height:150px;" src="~/assets/images/UserImages/@Model.Picture">
+                    <span class="font-weight-bold">@User.FindFirstValue(ClaimTypes.Name)</span>
+                    <span class="text-black-50">@User.FindFirstValue(ClaimTypes.Email)</span>
+                    <span> </span>
+                </div>
+            }
+
+        </div>
+        <div class="col-md-9 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <form enctype="multipart/form-data" asp-action="DashBoard">
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">FirstName</label><input type="text" asp-for="FirstName" class="form-control" placeholder="first name" v></div>
+                        <span asp-validation-for="FirstName"></span>
+                        <div class="col-md-6"><label class="labels">LastName</label><input type="text" asp-for="LastName" class="form-control" placeholder="Last Name" ></div>
+                        <span asp-validation-for="LastName"></span>
+
+                        <div class="col-md-12"><label class="labels">UserName</label><input type="text" asp-for="UserName" class="form-control" placeholder="User Name" ></div>
+                        <span asp-validation-for="UserName"></span>
+
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" asp-for="Email" class="form-control" placeholder="Email" ></div>
+                        <span asp-validation-for="Email"></span>
+
+                        <div class="col-md-6"><label class="labels">Picture</label><input type="file" asp-for="Picture" class="form-control" placeholder="Email"></div>
+                        <span asp-validation-for="Email"></span>
+
+                    </div>
+
+
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                </form>
+               
+            </div>
+        </div>
+       
+    </div>
+</div>

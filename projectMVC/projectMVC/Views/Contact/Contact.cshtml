@@ -1,0 +1,130 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model Contact
+
+
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Contact" asp-controller="Contact">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contact us</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    <div class="container">
+        <div class="page-header page-header-big text-center contact-header" >
+            <h1 class="page-title text-white">Contact us<span class="text-white">keep in touch with us</span></h1>
+        </div><!-- End .page-header -->
+    </div><!-- End .container -->
+
+    <div class="page-content pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-2 mb-lg-0">
+                    <h2 class="title mb-1">Contact Information</h2><!-- End .title mb-2 -->
+                    <p class="mb-3">Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="contact-info">
+                                <h3>The Office</h3>
+
+                                <ul class="contact-list">
+                                    <li>
+                                        <i class="icon-map-marker"></i>
+                                        El tagamoa heights club
+                                    </li>
+                                    <li>
+                                        <i class="icon-phone"></i>
+                                        <a href="tel:#">+92 423 567</a>
+                                    </li>
+                                    <li>
+                                        <i class="icon-envelope"></i>
+                                        <a href="mailto:#">info@Molla.com</a>
+                                    </li>
+                                </ul><!-- End .contact-list -->
+                            </div><!-- End .contact-info -->
+                        </div><!-- End .col-sm-7 -->
+
+                        <div class="col-sm-5">
+                            <div class="contact-info">
+                                <h3>The Office</h3>
+
+                                <ul class="contact-list">
+                                    <li>
+                                        <i class="icon-clock-o"></i>
+                                        <span class="text-dark">Monday-Saturday</span> <br>11am-7pm ET
+                                    </li>
+                                    <li>
+                                        <i class="icon-calendar"></i>
+                                        <span class="text-dark">Sunday</span> <br>11am-6pm ET
+                                    </li>
+                                </ul><!-- End .contact-list -->
+                            </div><!-- End .contact-info -->
+                        </div><!-- End .col-sm-5 -->
+                    </div><!-- End .row -->
+                </div><!-- End .col-lg-6 -->
+                <div class="col-lg-6">
+                    <h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
+                    <p class="mb-2">Use the form below to get in touch with the sales team</p>
+
+                    <form asp-action="contact" asp-controller="contact" method="post" class="contact-form mb-3">
+                        
+                        <div asp-validation-summary="ModelOnly" class="row text-danger">
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="cname" class="sr-only">Name</label>
+                                <input type="text" class="form-control" id="cname" placeholder="Name *" asp-for="Name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div><!-- End .col-sm-6 -->
+
+                            <div class="col-sm-6">
+                                <label for="cemail" class="sr-only">Email</label>
+                                <input type="email" class="form-control" id="cemail" placeholder="Email *" asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <label for="csubject" class="sr-only">Subject</label>
+                                <input type="text" class="form-control" id="csubject" placeholder="Subject" asp-for="Subject">
+                                <span asp-validation-for="Subject" class="text-danger"></span>
+
+                            </div><!-- End .col-sm-6 -->
+                        </div><!-- End .row -->
+
+                        <label for="cmessage" class="sr-only">Message</label>
+                        <textarea class="form-control" cols="30" rows="4" id="cmessage" placeholder="Message *" asp-for="Message"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+
+
+                        <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                            <span>SUBMIT</span>
+                            <i class="icon-long-arrow-right"></i>
+                        </button>
+                    </form><!-- End .contact-form -->
+                </div><!-- End .col-lg-6 -->
+                    <div class="col-lg-10" style="margin-right:auto;margin-left:auto">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.925325796378!2d31.446369685126466!3d29.9815759819052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583d693020ff57%3A0xac184c2f0804566b!2sEl%20tagamoa%20heights%20club!5e0!3m2!1sar!2seg!4v1680131082497!5m2!1sar!2seg" width="1000" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div><!-- End .row -->
+
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

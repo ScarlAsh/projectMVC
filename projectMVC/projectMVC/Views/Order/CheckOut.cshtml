@@ -1,0 +1,188 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<projectMVC.Data.StripeSetting> Stripe
+@model List<CartItem>
+@{
+	var shippingMethod = ViewBag.shippingMethod;
+	var total = double.Parse(shippingMethod) + Model.Select(i => i.Product.Price).Sum();
+}
+<main>
+<div class="page-content">
+	<div class="checkout">
+		<div class="container">
+			<div class="checkout-discount">
+				<form action="#">
+					@*<input type="text" class="form-control" required id="checkout-discount-input">*@
+
+				</form>
+			</div><!-- End .checkout-discount -->
+			<form asp-action="OrderCompleted" asp-controller="Order" method="post">
+				<input name="total" type="hidden"/>
+					
+				<div class="row">
+					<div class="col-lg-9">
+						<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+						<div class="row">
+							<div class="col-sm-6">
+								<label>First Name *</label>
+								<input type="text" class="form-control" name="ShipToAddress_FirstName" required>
+							</div><!-- End .col-sm-6 -->
+
+							<div class="col-sm-6">
+								<label>Last Name *</label>
+								<input type="text" class="form-control" name="ShipToAddress_LastName" required>
+							</div><!-- End .col-sm-6 -->
+						</div><!-- End .row -->
+						<label>Email address *</label>
+						<input type="email" class="form-control" name="BuyerEmail" required>
+					
+						<label>Street address *</label>
+						<input type="text" class="form-control" placeholder="House number and Street name" name="ShipToAddress_Street" required>
+						<div class="row">
+							<div class="col-sm-6">
+								<label>Town / City *</label>
+								<input type="text" class="form-control" name="ShipToAddress_City" required>
+							</div><!-- End .col-sm-6 -->
+
+							<div class="col-sm-6">
+								<label>State / Country *</label>
+								<input type="text" class="form-control" name="ShipToAddress_State" required>
+							</div><!-- End .col-sm-6 -->
+						</div><!-- End .row -->
+
+
+						<div class="row">
+							<div class="col-sm-6">
+								<label>Postcode / ZIP *</label>
+								<input type="text" class="form-control" name="ShipToAddress_ZipCode" required>
+							</div><!-- End .col-sm-6 -->
+							<div class="col-sm-6">
+								<label>Phone Number *</label>
+									<input type="text" class="form-control" name="ShipToAddress_PhoneNumber" pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$" required>
+							</div><!-- End .col-sm-6 -->
+						</div><!-- End .row -->
+
+					</div><!-- End .col-lg-9 -->
+					<aside class="col-lg-3">
+						<div class="summary">
+							<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+							<table class="table table-summary">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach(var itemCart in Model)
+									{
+										<tr>
+											@*product Detail*@
+											<td><a href="#">@itemCart.Product.Name.ToString()</a></td>
+											<td> @string.Format("{0:C}", itemCart.Product.Price)</td>
+										</tr>
+									}
+										
+									<tr class="summary-subtotal">
+										<td>Subtotal:</td>
+											<td>@string.Format("{0:C}", Model.Select(i => i.Product.Price).Sum())</td>
+									</tr><!-- End .summary-subtotal -->
+									<tr>
+										<td>Shipping:</td>
+											@if (int.Parse(shippingMethod) == 0)
+											{
+												<td>Free shipping</td>
+											}
+											else
+											{
+												<td>@string.Format("{0:C}",decimal.Parse(shippingMethod))</td>
+											}
+										</tr>
+									<tr class="summary-total">
+										<td>Total:</td>
+										@if (int.Parse(shippingMethod) > 0)
+										{
+												
+												<td>@string.Format("{0:C}",total)</td>
+												<input type="hidden" name="TotalPrice" value="@total"/>
+										}
+											
+									</tr><!-- End .summary-total -->
+								</tbody>
+							</table><!-- End .table table-summary -->
+
+								<div id="paypal-btn" style="width:500px"></div>
+								<br>
+							<script src="//checkout.stripe.com/v2/checkout.js"
+									class="stripe-button"
+									data-key="@Stripe.Value.PublishableKey"
+									data-locale="auto"
+									data-description="Sample Charge" data-label="Pay With Card">
+							</script>
+							<br />
+@*
+							<input type="radio" name="option"  onclick="showSubmitButton()"> Cash on delivery<br>
+								<br>
+
+							<button type="submit" id="submitButton" class="btn btn-outline-primary-2 btn-order btn-block" style="display: none; >
+								<span class="btn-text">Place Order</span>
+								<span class="btn-hover-text">Proceed to Checkout</span>
+							</button>
+*@
+								@*<script>
+									function showSubmitButton() {
+										document.getElementById("submitButton").style.display = "block";
+									}
+								</script>*@
+							
+						</div><!-- End .summary -->
+					</aside><!-- End .col-lg-3 -->
+				</div><!-- End .row -->
+			</form>
+		</div><!-- End .container -->
+	</div><!-- End .checkout -->
+</div><!-- End .page-content -->
+</main><!-- End .main -->
+@section Scripts{
+	<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+	<script>
+		paypal.Button.render({
+			env: 'sandbox',
+			client: {
+				sandbox: 'AS--jTHyG8gQgZ0NmVSrb1uUq04PDFIdraHL_ois5SpkECywvTW6t78hA4lJEsa0gzK-Xxmy7tRIewp8'
+			},
+			locale: 'en_US',
+			style: {
+				size: 'small',
+				color: 'gold',
+				shape: 'pill'
+			},
+			commit: true,
+			payment: function (data, actions) {
+				return actions.payment.create({
+					payment: {
+						transactions: [{
+							amount: {
+								total: @Html.Raw(total),
+								currency: 'USD'
+							}
+						}]
+					}
+				});
+			},
+			onAuthorize: function (data, actions) {
+				return actions.payment.execute().then(function () {
+					var url = '@Url.Action("Index","Home",new{})';
+					window.location.href = url;
+				});
+			}
+
+
+
+		}, '#paypal-btn');
+
+		
+	</script>
+
+}

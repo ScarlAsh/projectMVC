@@ -1,0 +1,212 @@
+﻿@model projectMVC.ViewModels.ProductViewModel;
+<p>Add a new Produc</p>
+
+<Form enctype="multipart/form-data" method="Post" asp-action="Create"> 
+
+
+
+
+    
+    <div class="row">
+        <div class="col-md-6">
+
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <select asp-for="Color" class="form-control">
+                    <option value="0" class="form-control">Black</option>
+                    <option value="1" class="form-control">White</option>
+                    <option value="2" class="form-control">Green</option>
+                    <option value="4" class="form-control">Blue</option>
+                    <option value="5" class="form-control">Sliver</option>
+                    <option value="6" class="form-control">Rose</option>
+                    <option value="7" class="form-control">Red</option>
+                    <option value="8" class="form-control">Grey</option>
+                    <option value="9" class="form-control">Purple</option>
+                    <option value="10" class="form-control">Graphite</option>
+                    <option value="11" class="form-control">Starlight</option>
+                    <option value="12" class="form-control">SPACEGREY</option>
+                    <option value="13" class="form-control">Beige</option>
+
+                </select>
+
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="UnitsInStock" class="control-label"></label>
+                <input asp-for="UnitsInStock" class="form-control" />
+                <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealseDate" class="control-label"></label>
+                <input asp-for="RealseDate" class="form-control" />
+                <span asp-validation-for="RealseDate" class="text-danger"></span>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label asp-for="Brand" class="control-label"></label>
+                <select asp-for="BrandId" class="form-control">
+                    <option value="1" class="form-control">Samsung</option>
+                    <option value="2" class="form-control">Nokia</option>
+                    <option value="3" class="form-control">Dell</option>
+                    <option value="4" class="form-control">Lenovo</option>
+                    <option value="5" class="form-control">Apple</option>
+                    <option value="6" class="form-control">Hp</option>
+                    <option value="7" class="form-control">JBL</option>
+                    <option value="8" class="form-control">Sony</option>
+                    <option value="9" class="form-control">Bose</option>
+                    <option value="10" class="form-control">KVIDIO</option>
+                    <option value="11" class="form-control">Logitech</option>
+                    <option value="12" class="form-control">Huawei</option>
+
+
+                </select>
+
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    <option value="1" class="form-control">Modile</option>
+                    <option value="2" class="form-control">Tablet</option>
+                    <option value="3" class="form-control">Labtop</option>
+                    <option value="4" class="form-control">Camera</option>
+                    <option value="5" class="form-control">HeadPhone</option>
+
+
+                </select>
+
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            
+            <div class="=form-group row">
+
+                
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <input asp-for="Image1" type="file" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Choose file....</label>
+
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="=form-group row">
+
+                
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <input asp-for="Image2" class="form-control custom-file-input"/>
+                        <label class="custom-file-label">Choose file....</label>
+
+                    </div>
+                </div>
+            </div>
+             <br><br>
+            <div class="=form-group row">
+
+               
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <input asp-for="Image3" class="form-control custom-file-input"/>
+                        <label class="custom-file-label">Choose file....</label>
+
+                    </div>
+                </div>
+            </div>
+             <br><br>
+            <div class="=form-group row">
+
+                
+                <div class="col-sm-12">
+                    <div class="custom-file">
+                        <input asp-for="Image4" class="form-control custom-file-input"/>
+                        <label class="custom-file-label">Choose file....</label>
+
+                    </div>
+                </div>
+            </div>
+             <br><br>
+             <div class="form-group">
+                 <label>Product Information</label>
+                    <div>
+
+                        <input style="margin-bottom:10px;" class="form-control"  name="info"/>
+
+                    </div>
+
+                    <div id="productInfos"><label onclick="addInput()" class="btn btn-light">+</label></div>
+             </div>
+
+            <br><br>
+            <input class="btn btn-light" type="submit" value="Create" />
+
+        </div>
+    </div>
+
+
+            <div>
+                <br><br>
+                <a asp-action="Index" class="btn btn-light">Back to List</a> 
+        
+            </div>
+            @section Scripts{
+                <script> 
+                    $(document).ready(function(){
+                        $('.custom-file-input').on("change" , function(){
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        })
+                    })
+
+                </script>
+            } 
+
+    </form>
+
+   
+    <script>
+        function addInput()
+        {
+            var input = document.createElement("input");
+            input.setAttribute("type","text");
+            input.setAttribute("name","info");
+            input.setAttribute("class","form-control");
+            var div = document.createElement("div");
+            div.setAttribute("class","form-group");
+            div.appendChild(input);
+            var parentDiv = document.getElementById("productInfos");
+            parentDiv.prepend(div);
+        }
+    </script>
+
+
+
+    
+
+   

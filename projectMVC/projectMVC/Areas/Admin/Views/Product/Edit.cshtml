@@ -1,0 +1,121 @@
+﻿@model projectMVC.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Color" class="control-label"></label>
+
+                <select asp-for="Color" class="form-control">
+                    <option value="0">Black</option>
+                    <option value="1">White</option>
+                    <option value="2">Green</option>
+                    <option value="4">Blue</option>
+                    <option value="5">Sliver</option>
+                    <option value="6">Rose</option>
+                    <option value="7">Red</option>
+                    <option value="8">Grey</option>
+                    <option value="9">Purple</option>
+                    <option value="10">Graphite</option>
+                    <option value="11">Starlight</option>
+                    <option value="12">SPACEGREY</option>
+                    <option value="13">Beige</option>
+
+                </select>
+
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescrition" class="control-label"></label>
+                <input asp-for="ShortDescrition" class="form-control" />
+                <span asp-validation-for="ShortDescrition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitsInStock" class="control-label"></label>
+                <input asp-for="UnitsInStock" class="form-control" />
+                <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealseDate" class="control-label"></label>
+                <input asp-for="RealseDate" class="form-control" />
+                <span asp-validation-for="RealseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Brand" class="control-label"></label>
+                <select asp-for="BrandId" class="form-control">
+                    <option value="1" class="form-control">Samsung</option>
+                    <option value="2" class="form-control">Nokia</option>
+                    <option value="3" class="form-control">Dell</option>
+                    <option value="4" class="form-control">Lenovo</option>
+                    <option value="5" class="form-control">Apple</option>
+                    <option value="6" class="form-control">Hp</option>
+                    <option value="7" class="form-control">JBL</option>
+                    <option value="8" class="form-control">Sony</option>
+                    <option value="9" class="form-control">Bose</option>
+                    <option value="10" class="form-control">KVIDIO</option>
+                    <option value="11" class="form-control">Logitech</option>
+                    <option value="12" class="form-control">Huawei</option>
+
+
+                </select>
+
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    <option value="1" class="form-control">Modile</option>
+                    <option value="2" class="form-control">Tablet</option>
+                    <option value="3" class="form-control">Labtop</option>
+                    <option value="4" class="form-control">Camera</option>
+                    <option value="5" class="form-control">HeadPhone</option>
+
+
+                </select>
+
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-light" asp-action="Index">Back to List</a>
+</div>
+@*
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

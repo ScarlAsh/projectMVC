@@ -1,0 +1,33 @@
+﻿@using System.Security.Claims;
+
+@model List<Order> 
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover" style="cursor: pointer;">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Order</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <th>
+                                <a asp-action="OrderDetails" asp-controller="Order" asp-route-id="@order.Id" asp-route-price="@order.TotalPrice">#@order.Id</a>
+                            </th>
+                            <td>@order.OrderDate</td>
+                            <td>@order.TotalPrice</td>
+                           
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

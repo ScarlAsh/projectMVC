@@ -1,0 +1,59 @@
+﻿@using PageList;
+@using projectMVC.Enums;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IPagedList<projectMVC.Models.Product>
+
+
+<div id="CartItem">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Color</td>
+
+                <td>Description</td>
+
+                <td>Brand</td>
+                <td>Category</td>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@((ProductColors)item.Color)</td>
+
+                    <td>@item.Description</td>
+
+                    <td>@item.Brand.Name</td>
+                    <td>@item.Category.Name</td>
+
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="display:flex; align-self:auto; justify-content:center; letter-spacing:10px;">
+        @Html.PagedListPager(Model , page => Url.Action ("_Search" , new {page , query = ViewBag.query}))
+    </div>
+
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+

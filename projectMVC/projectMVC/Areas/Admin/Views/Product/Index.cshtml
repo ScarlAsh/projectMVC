@@ -1,0 +1,110 @@
+﻿@using PageList;
+@using projectMVC.Enums;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IPagedList<projectMVC.Models.Product>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <a class="btn btn-light" asp-action="Create">Create New Product</a>
+        </div>
+        <div class="col-sm-8">
+                    <form width="80%" class="d-none d-sm-inline-block form-inline mr-2 ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="_Search" asp-controller="Product" asp-area="Admin">
+                        <div class="input-group">
+                            <input type="text"   name="query" class="form-control bg-light border-0 small" placeholder="Search for a Product"
+                              aria-label="Search" aria-describedby="basic-addon2" id="shopSearchBar">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+        </div>
+
+</div>
+</div>
+<br><br>
+<div id="Products">
+    <table class="table">
+        <thead>
+            <tr>
+               <td>Name</td>
+               <td>Price</td>
+               <td>Color</td>
+           
+               <td>Description</td>
+           
+               <td>Brand</td>
+               <td>Category</td>
+           
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                        <tr>
+            
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>@((ProductColors)item.Color)</td>
+            
+                            <td>@item.Description</td>
+
+                            <td>@item.Brand.Name</td>
+                            <td>@item.Category.Name</td>
+            
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+            }
+        </tbody>
+    </table>
+
+    <style>
+        #pagenumber a{
+            text-decoration:none;
+            color: black;
+            cursor:pointer;
+            margin:1rem;
+        }
+    </style>
+
+    <div id="pagenumber">
+         @Html.PagedListPager(Model , page => Url.Action ("Index" , new {page}))    
+    </div>
+</div> 
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function getDataFilter() {
+
+            var inputSearch = $("#shopSearchBar").val();
+
+            $.ajax({
+                type: "Get",
+                url: '/admin/product/_Search',
+                contentType: "application/json; charset=utf-8",
+            data: { query: inputSearch },
+                dataType: "html",
+                success: function (data) {
+                    console.log("succ");
+                    $("#Products").empty();
+                    $("#Products").html(data);
+                }, error: function (error) {
+                    console.log("error");
+
+
+                }
+            });
+        }
+
+    </script>

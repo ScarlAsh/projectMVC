@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<div style="width: 400px; margin: 0 auto; text-align: center;">
+			<h1 style="margin:auto">Welcome @UserManager.GetUserName(User) ! </h1>
+			
+		</div>
+	}
+
+	
+	
+
+
+	
+		
+	
